@@ -1,0 +1,84 @@
+server:
+  port: ${PORT:8080}
+spring:
+  profiles:
+    active: ${ENV:prod}
+  application:
+    name: cod2d-redirect
+  main:
+    allow-circular-references: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  properties:
+    hibernate:
+      format_sql: true
+      use_sql: true
+      show_sql: true
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+  rabbitmq:
+    host: ${AMQP_HOST}
+    port: ${AMQP_PORT}
+    username: ${AMQP_USERNAME}
+    password: ${AMQP_PASSWORD}
+    vhosts: ${VHOSTS}
+    virtual-host: ${VIRTUAL_VHOSTS}
+    primaryVirtualHost: ${PRIMARY_VHOST}
+    events:
+      logRedirect:
+        connection: default
+        exchange: ${MQ_EXCHANGE:mq-exchange-log-redirect}
+        queue: ${MQ_QUEUE:mq-log-redirect}
+        routingkey: ${MQ_ROUTING_KEY:mq-log-redirect-rk}
+        exchangeType: topic
+        ttlMultiply: ${MQ_TTL_MULTIPLY:0}
+        ttlRetryMessage: ${MQ_TTL_RETRY:5000}
+        maxRetriesAttempts: ${MQ_MAX_ATTEMPTS:5}
+        queueQuorum: ${MQ_QUEUE_QUORUM:false}
+        autoCreate: true
+
+management.endpoint.health.show-details: always
+
+springdoc:
+  version: '@project.version@'
+  api-docs:
+    groups:
+      enabled: false
+  swagger-ui:
+    path: /api/swagger-ui.html
+    display-request-duration: true
+    groups-order: DESC
+    operationsSorter: method
+    disable-swagger-default-url: false
+
+info:
+  app:
+    encoding: '@project.build.sourceEncoding@'
+  java:
+    source: '@java.version@'
+    target: '@java.version@'
+  build:
+    artifact: '@project.artifactId@'
+    name: '@project.name@'
+    description: '@project.description@'
+    version: '@project.version@'
+
+slack:
+  webhook: ${SLACK_WEBHOOK}
+  messages:
+    info: ${SLACK_MESSAGES_INFO:false}
+    error: ${SLACK_MESSAGES_ERROR:false}
+
+link:
+  cod2d: ${LINK_COD2D:https://cod2d.com.br}
+  erro404: ${ERRO404:https://cod2d.com.br/erro404.html}
+
+senhaMaster:
+
+

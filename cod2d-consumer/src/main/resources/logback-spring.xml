@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+
+	<springProperty scope="context" name="PROFILE_ACTIVE" source="spring.profiles.active" />
+
+	<springProperty scope="context" name="APP_NAME"	source="spring.application.name" />
+
+	<springProperty scope="context" name="version" source="info.build.version" />
+
+	<springProperty scope="context" name="JPASHOWSQL" source="spring.jpa.show-sql" />
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%d{yyyy-MM-dd_HH:mm:ss.SSS} %logger{36} %-5level %msg %n</Pattern>
+		</encoder>
+	</appender>
+
+	<property name="LOG_TEMP" value="/var/log/cod2d-consumer.log"/>
+	<property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/spring-api-${PID}.log}"/>
+
+	<logger name="br.com.cod2d.consumer" level="TRACE" additivity="false">
+		<appender-ref ref="STDOUT"/>
+	</logger>
+
+	<logger name="org.springframework.cache" level="TRACE" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+	<root level="ERROR" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</root>
+
+	<root level="INFO" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</root>
+
+	<logger name="feign.Logger" level="TRACE" />
+
+	<logger name="logging.level.org.springframework.web.servlet.DispatcherServlet" level="TRACE" additivity="false">
+		<appender-ref ref="STDOUT"/>
+	</logger>
+
+	<logger name="org.springframework.batch.core.step.AbstractStep" level="INFO" additivity="false">
+		<appender-ref ref="STDOUT"/>
+	</logger>
+
+	<logger name="br.com.cod2d.consumer.config" level="TRACE" additivity="false">
+		<appender-ref ref="STDOUT"/>
+	</logger>
+
+</configuration>

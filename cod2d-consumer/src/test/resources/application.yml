@@ -1,0 +1,60 @@
+server:
+  port: ${PORT:8082}
+
+spring:
+  application:
+    name: cod2d-consumer
+  profiles:
+    active: ${ENV:test}
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}
+    port: ${RABBIT_PORT:5672}
+    username: ${RABBIT_USERNAME:guest}
+    password: ${RABBIT_PASSWORD:guest}
+    vhosts: ${ENABLED_VHOSTS:/}
+    virtual-host: ${ENABLED_VHOSTS:/}
+    events:
+      log-redirect:
+        connection: default
+        exchange: ${MQ_EXCHANGE:mq-exchange-log-redirect}
+        queue: ${MQ_QUEUE:mq-log-redirect}
+        queueRoutingKey: ${MQ_ROUTING_KEY:mq-log-redirect-rk}
+        exchangeType: topic
+        ttlMultiply: ${MQ_TTL_MULTIPLY:0}
+        ttlRetryMessage: ${MQ_TTL_RETRY:5000}
+        maxRetriesAttempts: ${MQ_MAX_ATTEMPTS:5}
+        queueQuorum: ${MQ_QUEUE_QUORUM:false}
+        autoCreate: true
+
+slack:
+  webhook: "?"
+  messages:
+    info: false
+    error: true
+
+app:
+  speedracer-api-v2:
+    url: http://localhost:${wiremock.server.port:5000}
+    token: mock
+api-luiza:
+  token: mock
+  url: http://localhost:${wiremock.server.port:5000}
+
+info:
+  app:
+    environment: test
+  build:
+    artifact: '@project.artifactId@'
+    name: '@project.name@'
+    description: '@project.description@'
+    version: '@project.version@'
+
+springdoc:
+  version: '@project.version@'
+  api-docs:
+    groups:
+      enabled: false
+
+feign:
+  okhttp:
+    enabled: true

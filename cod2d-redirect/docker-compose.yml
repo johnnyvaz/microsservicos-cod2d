@@ -1,0 +1,17 @@
+services:
+  redirect:
+    image: gcr.io/cod2d-producao/cod2d-redirect:latest
+    restart: always
+    environment: 
+      - AMQP_HOST=
+      - AMQP_PASSWORD=
+      - AMQP_PORT=
+      - AMQP_USERNAME=
+      - DATABASE_PASSWORD=
+      - DATABASE_URL=
+      - DATABASE_USER=
+      - VHOSTS=
+      - VIRTUAL_VHOSTS=
+    ports:
+      - 8080:8080
+    command: java -jar /app/cod2d-redirect.jar

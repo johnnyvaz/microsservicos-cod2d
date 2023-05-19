@@ -1,0 +1,111 @@
+server:
+  port: ${PORT:5020}
+spring:
+  application:
+    name: cod2d-consumer
+  profiles:
+    active: ${ENV:prod}
+  rabbitmq:
+    host: ${AMQP_HOST}
+    port: ${AMQP_PORT}
+    username: ${AMQP_USERNAME}
+    password: ${AMQP_PASSWORD}
+    virtual-host: ${VIRTUAL_VHOSTS}
+    events:
+      logRedirect:
+        connection: default
+        exchange: ${MQ_EXCHANGE:mq-exchange-log-redirect}
+        queue: ${MQ_QUEUE:mq-log-redirect}
+        queueRoutingKey: ${MQ_ROUTING_KEY:mq-log-redirect-rk}
+        exchangeType: topic
+        ttlMultiply: ${MQ_TTL_MULTIPLY:0}
+        ttlRetryMessage: ${MQ_TTL_RETRY:5000}
+        maxRetriesAttempts: ${MQ_MAX_ATTEMPTS:0}
+        queueQuorum: ${MQ_QUEUE_QUORUM:false}
+        autoCreate: true
+        alertChannel: ${ALERT-CHANNEL-SLACK:#parking-lot}
+        alertBotToken: ${ALERT-CHANNEL-TOKEN}
+      newProduct:
+        connection: default
+        exchange: ${MQ_EXCHANGE:mq-exchange-product}
+        queue: ${MQ_QUEUE:mq-new-product}
+        queueRoutingKey: ${MQ_ROUTING_KEY:new-product-rk}
+        exchangeType: topic
+        ttlMultiply: ${MQ_TTL_MULTIPLY:0}
+        ttlRetryMessage: ${MQ_TTL_RETRY:5000}
+        maxRetriesAttempts: ${MQ_MAX_ATTEMPTS:0}
+        queueQuorum: ${MQ_QUEUE_QUORUM:false}
+        autoCreate: true
+
+        alertBotToken: ${ALERT-CHANNEL-TOKEN}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  properties:
+    hibernate:
+      format_sql: true
+      use_sql: true
+      show_sql: true
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+
+
+gs1:
+  client_id: ${GS1_CLIENT_ID}
+  client_secret: ${GS1_CLIENT_SECRET}
+  client_secret_base64: ${GS1_CLIENT_SECRET_BASE64}
+  host: ${GS1_HOST}
+
+info:
+  app:
+    encoding: '@project.build.sourceEncoding@'
+  java:
+    source: '@java.version@'
+    target: '@java.version@'
+  build:
+    artifact: '@project.artifactId@'
+    name: '@project.name@'
+    description: '@project.description@'
+    version: '@project.version@'
+
+slack:
+  webhook: ${SLACK_WEBHOOK}
+  messages:
+    info: ${SLACK_MESSAGES_INFO:false}
+    error: ${SLACK_MESSAGES_ERROR:false}
+
+app:
+  ipinfo:
+    url: ${IPINFO-URL}
+    token: ${IPINFO-TOKEN}
+
+feign:
+  okhttp:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: ${FEIGN_TIMEOUT:20000}
+        readTimeout: ${FEIGN_TIMEOUT:10000}
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
+springdoc:
+  version: '@project.version@'
+  api-docs:
+    groups:
+      enabled: false
+  swagger-ui:
+    path: /swagger-ui.html
+    display-request-duration: true
+    groups-order: DESC
+    operationsSorter: method
+    disable-swagger-default-url: false

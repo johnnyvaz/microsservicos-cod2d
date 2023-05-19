@@ -1,0 +1,126 @@
+server:
+  port: ${PORT_API:5010}
+  servlet:
+    context-path: /api
+spring:
+  profiles:
+    active: ${ENV_API:prod}
+  application:
+    name: cod2d-api
+  main:
+    allow-circular-references: true
+  security:
+    user:
+      name: ${SECURITY-USERNAME}
+      password: ${SECURITY-PASSWORD}
+    jwt:
+      uri: "/**"
+      prefix: ${JWT_PREFIX_API:Bearer}
+      secret: ${JWT_SECRET_API}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  properties:
+    hibernate:
+      format_sql: true
+      use_sql: true
+      show_sql: true
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+  rabbitmq:
+    host: ${AMQP_HOST}
+    port: ${AMQP_PORT:5672}
+    username: ${AMQP_USERNAME}
+    password: ${AMQP_PASSWORD}
+    vhosts: ${VHOSTS}
+    virtual-host: ${VIRTUAL_VHOSTS}
+    events:
+      logRedirect:
+        connection: default
+        exchange: ${MQ_EXCHANGE}
+        queue: ${MQ_QUEUE}
+        queueRoutingKey: ${MQ_ROUTING_KEY}
+        exchangeType: topic
+        ttlMultiply: ${MQ_TTL_MULTIPLY:0}
+        ttlRetryMessage: ${MQ_TTL_RETRY:5000}
+        maxRetriesAttempts: ${MQ_MAX_ATTEMPTS:5}
+        queueQuorum: ${MQ_QUEUE_QUORUM:false}
+        autoCreate: true
+        alertChannel: ${ALERT-CHANNEL-SLACK:#parking-lot}
+        alertBotToken: ${ALERT-CHANNEL-TOKEN}
+      newProduct:
+        connection: default
+        exchange: ${MQ_EXCHANGE_PRODUCT}
+        queueRoutingKey: ${MQ_ROUTING_KEY_PRODUCT}
+        queue: ${MQ_QUEUE_PRODUCT}
+        exchangeType: topic
+        ttlMultiply: ${MQ_TTL_MULTIPLY_PRODUCT:0}
+        ttlRetryMessage: ${MQ_TTL_RETRY_PRODUCT:5000}
+        maxRetriesAttempts: ${MQ_MAX_ATTEMPTS_PRODUCT:5}
+        queueQuorum: ${MQ_QUEUE_QUORUM_PRODUCT:false}
+        autoCreate: true
+        alertChannel: ${ALERT-CHANNEL-SLACK:#parking-lot}
+        alertBotToken: ${ALERT-CHANNEL-TOKEN}
+      gtin:
+        connection: default
+        exchange: mq-exchange-gtin
+        queue: mq-gs1
+        multipleQueueRoutingKey: gtin-rk
+        queueRoutingKey: gtin-rk
+        exchangeType: topic
+        ttlRetryMessage: ${MQ_PRODUCT_MAKER_TTL_RETRY:5000}
+        ttlMultiply: ${MQ_PRODUCT_MAKER_TTL_MULTIPLY:2}
+        maxRetriesAttempts: ${MQ_PRODUCT_MAKER_MAX_ATTEMPTS:5}
+        autoCreate: true
+        alertChannel: ${ALERT-CHANNEL-SLACK:#parking-lot}
+        alertBotToken: ${ALERT-CHANNEL-TOKEN}
+
+management.endpoint.health.show-details: always
+
+springdoc:
+  version: '@project.version@'
+  api-docs:
+    groups:
+      enabled: false
+  swagger-ui:
+    path: /swagger-ui.html
+    display-request-duration: true
+    groups-order: DESC
+    operationsSorter: method
+    disable-swagger-default-url: false
+
+info:
+  app:
+    encoding: '@project.build.sourceEncoding@'
+  java:
+    source: '@java.version@'
+    target: '@java.version@'
+  build:
+    artifact: '@project.artifactId@'
+    name: '@project.name@'
+    description: '@project.description@'
+    version: '@project.version@'
+
+slack:
+  webhook: ${SLACK_WEBHOOK}
+  messages:
+    info: ${SLACK_MESSAGES_INFO:false}
+    error: ${SLACK_MESSAGES_ERROR:false}
+
+api:
+  softup:
+    token: 
+    url: 
+  bling:
+    url: 
+    token: 
+
+
+senhaMaster: 
+
+

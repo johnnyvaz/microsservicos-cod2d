@@ -1,0 +1,46 @@
+HELP.md
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+/.mvn/
+mvnw
+mvnw.cmd
+
+.attach*
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+/build/
+
+### VS Code ###
+.vscode/
+
+credentials.json
+package/
+newrelic/
+tmp/
+/.metadata/
+.checkstyle
+
+hs_err_pid30204.log
+
+*.log
+.history/*
+/cod2d-api-aws.pem
